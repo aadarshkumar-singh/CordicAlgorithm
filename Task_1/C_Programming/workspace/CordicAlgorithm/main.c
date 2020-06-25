@@ -6,7 +6,6 @@
  *  		Hari Krishna Yelchuri
  */
 
-
 #include <stdio.h>
 #include <math.h>
 #include <stdint.h>
@@ -43,8 +42,8 @@ static const int32_t restrictedAngles[] =
 		131071
 };
 
-int32_t x_axisRotationList[NUMBER_OF_ITERATIONS] ;
-int32_t y_axisRotationList[NUMBER_OF_ITERATIONS] ;
+int x_axisRotationList[NUMBER_OF_ITERATIONS] ;
+int y_axisRotationList[NUMBER_OF_ITERATIONS] ;
 int32_t convertIntoRadian(float angle);
 
 void cordicAlgorithm( int32_t x,int32_t y ,int32_t targetAngle);
@@ -52,19 +51,56 @@ void cordicAlgorithm( int32_t x,int32_t y ,int32_t targetAngle);
 int main ()
 {
 	/*user enters input value in float*/
+
 	float angle;
-	int32_t targetAngle ;
+	int targetAngle ;
 	setvbuf(stdout,NULL,_IONBF,0);
-//	printf ("Enter the rotation angle in degrees ");
-//	scanf("%f",&angle);
+	int32_t x = 1 ,y = 0;
+	angle = 30;
 
-	angle = 70 ;
-	/* convert the float value into radians */
-	targetAngle = convertIntoRadian(angle);
-	cordicAlgorithm(1,0,targetAngle);
+//	1. x1, y1 => x2 = -y1, y2 = x1. //90 degree rotation
+//    2. angle = angle - 90
+//	3. cordic(x,y,angle)
 
-	printf("%d\n", (GAIN_FACTOR_K >> 28 ) * (x_axisRotationList[NUMBER_OF_ITERATIONS-1] >> 28 ));
-	printf("%d\n", (GAIN_FACTOR_K >> 28 ) * (x_axisRotationList[NUMBER_OF_ITERATIONS-1] >> 28 ));
+	if(angle <= 90)
+	{
+		targetAngle = convertIntoRadian(angle);
+		printf("%d\n", targetAngle);
+		printf("%d\n", x );
+		printf("%d\n", y);
+		cordicAlgorithm(x, y, targetAngle);
+	}
+	else if (angle > 90 && angle <= 180)
+	{
+		angle = angle - 90;
+		targetAngle = convertIntoRadian(angle);
+		printf("%d\n", targetAngle);
+		printf("%d\n", -y );
+		printf("%d\n", x);
+		cordicAlgorithm(-y, x, targetAngle);
+	}
+	else if (angle > 180 && angle <= 270)
+	{
+		angle = angle - 180;
+		targetAngle = convertIntoRadian(angle);
+		printf("%d\n", targetAngle);
+		printf("%d\n", -x );
+		printf("%d\n", -y);
+		cordicAlgorithm(-x, -y, targetAngle);
+	}
+	else if (angle > 270 && angle <= 360)
+	{
+		angle = angle - 180;
+		targetAngle = convertIntoRadian(angle);
+		printf("%d\n", targetAngle);
+		printf("%d\n", -x );
+		printf("%d\n", y);
+		cordicAlgorithm(-x, y, targetAngle);
+	}
+
+
+	printf("%f\n", (x_axisRotationList[NUMBER_OF_ITERATIONS-1]) * pow(2,-28) );
+	printf("%f\n", (y_axisRotationList[NUMBER_OF_ITERATIONS-1]) * pow(2,-28) );
 
 	return 0 ;
 }
@@ -83,8 +119,9 @@ void cordicAlgorithm(int32_t x, int32_t y ,int32_t targetAngle)
 	 int32_t y_next = 0;
 	 int32_t z_next = 0;
 
-	 int32_t x_current = x ;
-	 int32_t y_current = y ;
+
+	 int32_t x_current = 163007430 * x;
+	 int32_t y_current = 163007430 * y;
 	 int32_t z_current = targetAngle ;
 
 	 while (i < NUMBER_OF_ITERATIONS)
@@ -111,6 +148,5 @@ void cordicAlgorithm(int32_t x, int32_t y ,int32_t targetAngle)
 
 		i=i+1 ;
 	 }
-
-
 }
+
