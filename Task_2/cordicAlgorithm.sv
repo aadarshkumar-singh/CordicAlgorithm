@@ -55,7 +55,7 @@ module CORDIC_ALGO #(parameter width = 32)(
 	end
 	else if (angle > 32'd1264972559 && angle < 32'd1686630973) begin
         x[0] <= y_start;
-        y[0] <= - x_starts;
+        y[0] <= - x_start;
         z[0] <= angle - 32'd1264972559; // subtract 3pi/2 for angle in this	
 	end	
   end
