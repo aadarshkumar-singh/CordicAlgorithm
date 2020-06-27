@@ -1,5 +1,5 @@
 ###########################################################
-# Author : Aadarsh Kumar Singh
+# Author : Aadarsh Kumar Singh , Hari Krishna Yelchuri
 # Date : 21/06/2020
 ###########################################################
 import math
