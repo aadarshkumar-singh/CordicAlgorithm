@@ -43,21 +43,20 @@ module CORDIC_ALGO #(parameter width = 32)(
         y[0] = y_start;
         z[0] = angle;
 	end
-	else if (angle > 32'd421658414 && angle <= 32'd843314144) begin
+	else if (angle > 32'd421657072 && angle <= 32'd843314144) begin
         x[0] = -y_start;
         y[0] = x_start;
-        z[0] = angle - 32'd421658414; // subtract pi/2 for angle in this 
+        z[0] = angle - 32'd421657072; // subtract pi/2 for angle in this 
 	end
-	else if (angle > 32'd843314144 && angle <= 32'd1264972559) begin
+	else if (angle > 32'd843314144 && angle <= 32'd1264971216) begin
         x[0] = - x_start;
         y[0] = - y_start;
-        z[0] = angle - 32'd843314144; // subtract pi for angle in this
-	
+        z[0] = angle - 32'd843314144; // subtract pi for angle in this		
 	end
-	else if (angle > 32'd1264972559 && angle <= 32'd1686630973) begin
+	else if (angle > 32'd1264971216 && angle <= 32'd1686628080) begin
         x[0] = y_start;
         y[0] = - x_start;
-        z[0] = angle - 32'd1264972559; // subtract 3pi/2 for angle in this
+        z[0] = angle - 32'd1264971216; // subtract 3pi/2 for angle in this
 	end
 	
 	for (int i=0; i < (12); i=i+1) begin
